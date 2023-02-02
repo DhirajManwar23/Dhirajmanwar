@@ -74,9 +74,6 @@ $Wardname = $sign->FunctionOption($WardnameQry,"",'ward_name',"id");
 	</div>
 </div>
   <!-- ==============MODAL END ================= -->   
-	  
-	  
-	  
       <div class="main-panel">        
         <div class="content-wrapper">
 		<div class="row">

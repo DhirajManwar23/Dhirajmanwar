@@ -1,0 +1,231 @@
+<?php 
+session_start();
+	if(!isset($_SESSION["username"])){
+		header("Location:pgLogin.php");
+	}
+$requesttype = $_REQUEST["type"];
+$_SESSION["requesttype"] = $requesttype;
+$id = $_REQUEST["id"];
+$_SESSION["requestid"] = $id;
+	$name = "";
+	$email = ""; 
+	$role= "";
+	$priority= "";
+	$visibility = "";
+
+// Include class definition
+	require "function.php";
+	$sign=new Signup();
+if($requesttype=="edit"){
+	
+	echo $qry = "SELECT name,email,role,priority,visibility from tw_sub_admin WHERE id = ".$id." ";
+	$retVal = $sign->FunctionJSON($qry);
+	$decodedJSON = json_decode($retVal);
+	$name = $decodedJSON->response[0]->name;
+	$email = $decodedJSON->response[1]->email;
+	$role = $decodedJSON->response[2]->role;
+	$priority = $decodedJSON->response[3]->priority; 
+	$visibility = $decodedJSON->response[4]->visibility;
+	
+	echo $qry1 = "SELECT id,role_type from tw_role_master WHERE visibility='true' Order by priority,role_type ";
+	$retVal1 = $sign->FunctionOption($qry1,$role,'role_type','id');
+}
+else{
+		echo $qry1 = "SELECT id,role_type from tw_role_master WHERE visibility='true' Order by priority,role_type ";
+		$retVal1 = $sign->FunctionOption($qry1,$role,'role_type','id');
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trace Waste | Sub Admin Master</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../assets/css/custom/sweetalert2.min.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+   <!-- endinject -->
+  <!-- tw-css:start -->
+  <link rel="stylesheet" href="../assets/css/custom/tw-switch.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+</head>
+
+<body>
+	<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+		<?php
+			include_once("navTopHeader.php");
+		?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+		<?php
+			include_once("navRightSideSetting.php");
+		?>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+        <?php
+			include_once("navSideBar.php");
+		?>
+      <!-- partial -->
+      <div class="main-panel">        
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Sub Admin Master</h4>
+                 
+                  <div class="forms-sample">
+                    <div class="form-group">
+						<label for="txtbankaccountprooftype">Name<code>*</code></label>
+						<input type="text" class="form-control" id="txtname" maxlength="100" value="<?php echo $name; ?>" placeholder="Enter Name" />
+                    </div>
+					<div>
+						<label for="txtbankaccountprooftype">Email <code>*</code></label>
+						<input type="text" class="form-control" id="txtemail" maxlength="100" value="<?php echo $email; ?>" placeholder="Enter Email" />
+                    </div><br>
+					<div class="form-group" >
+						<label for="selRole">Role <code>*</code></label>
+						<select name="role" id="txtrole" class="form-control" >
+						 <?php echo $retVal1;?>
+						</select>
+					</div>
+                    <div class="form-group">
+						<label for="txtPriority">Priority <code>*</code></label>
+						<input type="number" class="form-control" value="<?php echo $priority; ?>" id="txtPriority" maxlength="3" placeholder="Priority" />
+                    </div>
+                    <div class="form-group">
+						<label for="chkVisibility">Visibility </label><br>
+						<label class="switch">
+						<input type="checkbox" id="chkVisibility" <?php if ($visibility=="true") { echo "checked"; } ?> />
+						<span class="slider round"></span>
+						</label>
+					</div>
+					        
+                    <button type="button" id="btnAddrecord" class="btn btn-success" onclick="addrecord();">
+					<?php if($requesttype=="add"){ ?>Add Record<?php }else{ ?>Update Record<?php } ?></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <?php
+			include_once("footer.php");
+		?>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../assets/js/hoverable-collapse.js"></script>
+  <script src="../assets/js/template.js"></script>
+  <script src="../assets/js/settings.js"></script>
+   <script src="../assets/js/custom/sweetalert2.min.js"></script>
+	<script src="../assets/js/custom/sweetAlert.js"></script>
+  <!-- endinject -->
+  <script src="../assets/css/jquery/jquery.min.js"></script>
+     <script type='text/javascript'>
+$('input, textarea').blur(function()
+{
+		
+	var valplaceholder = $(this).attr("placeholder");
+	var vallblid = $(this).attr("id");
+	var valid = "err" + vallblid;
+	var valtext = "Please enter " + valplaceholder;
+    var check = $(this).val();
+	if(check == '')
+	{
+		$(this).parent().addClass('has-danger');
+		$(this).after('<label id="' + valid + '" class="error mt-2 text-danger">'+valtext+'</label>');	
+	}
+	else
+	{
+		$(this).parent().removeClass('has-danger');  
+		$("#"+valid+"").fadeOut(); 
+	}
+});
+var valrequesttype = "<?php echo $requesttype;?>";
+
+function addrecord(){
+		var buttonHtml = $('#btnAddrecord').html();
+		
+		$('#btnAddrecord').attr("disabled","true");
+		$('#btnAddrecord').removeClass('btn-success');
+		$('#btnAddrecord').addClass('btn-secondary');//secondary;
+		$('#btnAddrecord').html('<i class="ti-timer"></i> Processing...');
+		
+		$.ajax({
+			type:"POST",
+			url:"apiAddSubAdmin.php",
+			data:{name:$("#txtname").val(),email:$("#txtemail").val(),role:$("#txtrole").val(),priority:$("#txtPriority").val(),visibility:$('#chkVisibility').prop('checked')},
+			success:function(response){
+			console.log(response);
+				$('#btnAddrecord').removeAttr('disabled');
+				$('#btnAddrecord').removeClass('btn-secondary');
+				$('#btnAddrecord').addClass('btn-success');
+				
+				if($.trim(response)=="Success"){
+					if(valrequesttype=="add"){
+						$('#btnAddrecord').html('Add Record');
+						showAlertRedirect("Data Added Successfully","","success","pgSubAdmin.php");
+						}
+						
+					else{
+						$('#btnAddrecord').html('Update Record');
+						showAlertRedirect("Data Updated Successfully","","success","pgSubAdmin.php");
+						
+					}
+					
+					$("#txtname").val("");
+					$("#txtemail").val("");
+					$("#selRole").val("");
+					$("#txtPriority").val("");
+					$("#txtDescription").val("");
+					// window.location.href="pgSubAdmin.php";
+				}
+				
+				else if($.trim(response)=="Exist"){
+					showAlert("Record already exist","","error");
+					
+				}
+				else{
+					
+					showAlert("Something Went Wrong. Please Try After Sometime","","warning");
+					
+				}
+				
+				$('#btnAddrecord').html(buttonHtml);
+			}
+		});
+	 
+}
+
+function alertBox(value){
+	alert(value);
+}
+	
+</script>	
+</body>
+
+</html>

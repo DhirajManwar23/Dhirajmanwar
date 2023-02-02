@@ -1,0 +1,13 @@
+<?php
+	// Include class definition
+	require "function.php";
+	$sign=new Signup();
+	$tablename = $sign->escapeString($_POST["tablename"]);
+	$id = $sign->escapeString($_POST["id"]);
+	$qry="Delete from ".$tablename." where ID = order by ID Desc";
+	
+	$format = "HTML";
+	$tableName = "tw_company_details";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

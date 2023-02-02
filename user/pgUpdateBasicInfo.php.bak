@@ -1,0 +1,297 @@
+<?php 
+session_start();
+	if(!isset($_SESSION["companyusername"])){
+		header("Location:pgLogin.php");
+	}
+	include("commonFunctions.php");
+	$commonfunction=new Common();
+	$ip_address= $commonfunction->getIPAddress();
+	$company_id = $_SESSION["company_id"];
+	$requesttype = $_REQUEST["type"];
+	$requestid = $_REQUEST["id"];
+	date_default_timezone_set("Asia/Kolkata");
+	$cur_date=date("Y-m-d h:i:sa");
+	
+	// Include class definition
+	require "function.php";
+	$sign=new Signup();
+	$AddressLine1 = "";
+	$AddressLine2 = "";
+	$Location = "";
+	$Pincode = "";
+	$City = "";
+	$State = "";
+	$Country = "";
+	$Status = "";
+	if($requesttype=="add"){
+		
+		
+		$qry1 = "select id,address_type_value from tw_address_type_master where visibility = 'true' ORDER by priority, address_type_value  ASC";
+		$retVal1 = $sign->FunctionOption($qry1,$Status,'address_type_value','id');
+		
+		
+	}
+	else{
+			$qry = "SELECT AddressLine1,AddressLine2,Location,Pincode,City,State,Country FROM tw_company_details WHERE ID = '".$company_id."' ";
+			$retVal = $sign->FunctionJSON($qry);
+			$decodedJSON = json_decode($retVal);
+			$AddressLine1 = $decodedJSON->response[0]->AddressLine1;
+			$AddressLine2 = $decodedJSON->response[1]->AddressLine2; 
+			$Location = $decodedJSON->response[2]->Location; 
+			$Pincode = $decodedJSON->response[3]->Pincode; 
+			$City = $decodedJSON->response[4]->City; 
+			$State = $decodedJSON->response[5]->State; 
+			$Country = $decodedJSON->response[6]->Country;
+			
+			$qry3 = "select id,address_type_value from tw_address_type_master where visibility = 'true' ORDER by priority, address_type_value  ASC";
+			$retVal1 = $sign->FunctionOption($qry3,$contact_field,'address_type_value','id');
+		
+		
+	}
+	
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trace Waste | Basic Info</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+		<?php
+			include_once("navTopHeader.php");
+		?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+		<?php
+			include_once("navRightSideSetting.php");
+		?>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+		<?php
+			include_once("navSideBar.php");
+		?>
+      <!-- partial -->
+      <div class="main-panel">        
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Basic Info</h4>
+                  <div class="forms-sample">
+					<div class="form-group row">
+					  <label for="ContactField" class="col-sm-3 col-form-label">Address Type</label>
+					  <div class="col-sm-9">
+						<select id="selAddresType" class="form-control form-control-sm">
+							<?php echo $retVal1; ?>
+						</select>
+					  </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="AddressLine1" class="col-sm-3 col-form-label">Address Line 1</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="100" id="txtAddressLine1" value="<?php echo $AddressLine1; ?>" placeholder="Address Line 1">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="AddressLine2" class="col-sm-3 col-form-label">Address Line 2</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="100" id="txtAddressLine2" value="<?php echo $AddressLine2; ?>" placeholder="Address Line 2">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="Pincode" class="col-sm-3 col-form-label">Pincode</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="6" id="txtPincode" onblur="myFunction(this.value)" value="<?php echo $Pincode; ?>" placeholder="Pincode">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="Location" class="col-sm-3 col-form-label">Location</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="20" id="txtLocation" value="<?php echo $Location; ?>" placeholder="Location">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="City" class="col-sm-3 col-form-label">City</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="20" disabled id="txtCity" value="<?php echo $City; ?>" placeholder="City">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="State" class="col-sm-3 col-form-label">State</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" id="txtState" disabled maxlength="20" value="<?php echo $State; ?>" placeholder="State">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="Country" class="col-sm-3 col-form-label">Country</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="20" disabled id="txtCountry" value="<?php echo $Country; ?>" placeholder="Country">
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="GoogleMap" class="col-sm-3 col-form-label">Google Map</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="100" id="txtGoogleMap" value="<?php echo $Country; ?>" placeholder="Google Map">
+                      </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mr-2" onclick="adddata()">Update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+			<?php
+				include_once("footer.php");
+			?>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../assets/js/hoverable-collapse.js"></script>
+  <script src="../assets/js/template.js"></script>
+  <script src="../assets/js/settings.js"></script>
+  <!-- endinject -->
+</body>
+<script src="../assets/css/jquery/jquery.min.js"></script>
+
+ <script>
+ $(document).ready(function(){
+   
+});
+
+ $('input').blur(function()
+{
+		
+	var valplaceholder = $(this).attr("placeholder");
+	var vallblid = $(this).attr("id");
+	var valid = "err" + vallblid;
+	var valtext = "Please enter " + valplaceholder;
+    var check = $(this).val();
+	if(check == '')
+	{
+		$(this).parent().addClass('has-danger');
+		$(this).after('<label id="' + valid + '" class="error mt-2 text-danger">'+valtext+'</label>');	
+	}
+	else
+	{
+		$(this).parent().removeClass('has-danger');  
+		$("#"+valid+"").fadeOut(); 
+	}
+});
+function myFunction(val) {
+	getPinCodeResi($("#txtPincode").val());
+}
+   function adddata(){
+	 
+			var valcreated_by = "<?php echo $created_by;?>";
+			var valcreated_on = "<?php echo $cur_date;?>";
+			var valcreated_ip = "<?php echo $ip_address;?>";
+			var valrequesttype = "<?php echo $requesttype;?>";
+			
+			if(valrequesttype=="add"){
+				var valquery = "insert into tw_company_contact(company_id,contact_field,value,public_visible,status,created_by,created_on,created_ip)values('"+valcreated_by+"','"+$("#selContactField").val()+"','"+$("#txtValue").val()+"','"+$('#chkVisibility').prop('checked')+"','Pending','"+valcreated_by+"','"+valcreated_on+"','"+valcreated_ip+"')";
+				var valquerycount = "select count(*) as cnt from tw_company_contact where value = '"+$("#txtValue").val()+"' and company_id='"+valcreated_by+"'";
+				
+			}
+			else{
+				var valrequestid = "<?php echo $requestid;?>";
+				var valquery = "Update tw_company_contact set contact_field = '"+$("#selContactField").val()+"' , value = '"+$("#txtValue").val()+"', public_visible = '"+$('#chkVisibility').prop('checked')+"',modified_by='"+valcreated_by+"',modified_on='"+valcreated_on+"',modified_ip='"+valcreated_ip+"' where id = '"+valrequestid+"' ";
+				var valquerycount = "select count(*) as cnt from tw_company_contact where value = '"+$("#txtValue").val()+"' and company_id!='"+valcreated_by+"'";
+			}
+			
+			$('#btncreate').attr("disabled","true");
+		    $('#btncreate').removeClass('btn-success');
+		    $('#btncreate').addClass('btn-secondary');//secondary;
+		    $('#btncreate').html('<i class="ti-timer"></i> Processing...');
+		  
+			$.ajax({
+			type:"POST",
+			url:"apiCompanyProfile.php",
+			data:{valquery:valquery,valquerycount:valquerycount},
+			success:function(response){
+				//console.log(response);
+				
+				$('#btncreate').removeAttr('disabled');
+				$('#btncreate').removeClass('btn-warning');
+				$('#btncreate').addClass('btn-success');
+				$('#btncreate').html('Add');
+					if($.trim(response)=="Success"){
+					if(valrequesttype=="add"){
+						showAlertRedirect("Success","Data Added Successfully","success","pgCompanyProfile.php");
+					}
+					else{
+						showAlertRedirect("Success","Data Updated Successfully","success","pgCompanyProfile.php");
+					}
+				}
+				else if($.trim(response)=="Exist"){
+					showAlertRedirect("warning","Value already exist","success","pgCompanyProfile.php");
+					$("#txtValue").focus();
+				}else{
+					showAlertRedirect("Something Went Wrong. Please Try After Sometime","success","pgCompanyProfile.php");
+				}
+			} 
+		});  
+	 
+		
+  }
+ 
+ function getPinCodeResi(id){
+	$.ajax({
+		type:"GET",
+		url:"https://api.postalpincode.in/pincode/"+id,
+		dataType:"JSON",
+		data:{},
+		success: function(response){
+			console.log(response);
+			if (response["0"]["Message"]!="No records found")
+			{
+				$("#txtCity").val(response["0"]["PostOffice"]["0"]["Region"]);
+				$("#txtState").val(response["0"]["PostOffice"]["0"]["State"]);
+				$("#txtCountry").val(response["0"]["PostOffice"]["0"]["Country"]);
+				$("#txtPincode").focus();
+			}
+			else
+			{
+				$("#txtCity").focus();
+			}
+		}
+	});
+}
+ 
+function alertBox(value){
+	alert(value);
+}
+ </script>
+ 
+</html>

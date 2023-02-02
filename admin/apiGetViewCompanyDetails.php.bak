@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	echo $qry="SELECT cd.id,cd.CompanyName,cd.Location ,cd.Pincode,cd.City ,cd.Status,ctm.company_type FROM tw_company_details cd LEFT JOIN tw_company_type_master ctm ON cd.CompanyType = ctm.id order by cd.id Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = "tw_company_details";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,false);
+	echo $retVal;
+?>

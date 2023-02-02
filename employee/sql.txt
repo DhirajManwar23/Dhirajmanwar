@@ -1,0 +1,6 @@
+SELECT  entry_date, 
+    (SELECT sum(quantity) FROM tw_mixwaste_manual_entry WHERE waste_type=1 AND entry_date = t1.entry_date) AS A,
+    (SELECT sum(quantity) FROM tw_mixwaste_manual_entry WHERE waste_type=2 AND entry_date = t1.entry_date) AS B,
+    (SELECT sum(quantity) FROM tw_mixwaste_manual_entry WHERE waste_type=3 AND entry_date = t1.entry_date) AS C
+FROM tw_mixwaste_manual_entry AS T1
+GROUP BY entry_date    ddddd;

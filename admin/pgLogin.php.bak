@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trace-Waste | Admin Login</title>
+  <!-- plugins:css -->
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="../assets/css/custom/sweetalert2.min.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+  <style>
+  .label{
+	  display:none;
+  }
+  .swal-icon--error{border-color:#f27474;-webkit-animation:animateErrorIcon .5s;animation:animateErrorIcon .5s}.swal-icon--error__x-mark{position:relative;display:block;-webkit-animation:animateXMark .5s;animation:animateXMark .5s}.swal-icon--error__line{position:absolute;height:5px;width:47px;background-color:#f27474;display:block;top:37px;border-radius:2px
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="../assets/images/logo.png" alt="logo" style="width:100%;">
+              </div>
+              <h4>Hello Admin! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <div class="pt-3">
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-lg" id="txtUsername" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" id="txtPassword" placeholder="Password">
+                </div>
+				<div class="form-group">
+                 <a class="text-primary" onclick="viewPassword()">View</a>
+                </div>
+                <div class="mt-3">
+                  <a class="btn btn-block btn-success btn-lg font-weight-medium auth-form-btn" id="btnSignIn" onclick="adminWindow();">SIGN IN</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+</body>
+<script src="../assets/css/jquery/jquery.min.js"></script>
+<script src="../assets/js/custom/sweetAlert.js"></script>
+<script src="../assets/js/custom/sweetalert2.min.js"></script>
+<!-- Plugin js for this page-->
+ <script>
+ $(document).ready(function(){
+	 $("swal-overlay swal-overlay--show-modal").attr("style", "display:none");
+});
+function viewPassword() {
+  var x = document.getElementById("txtPassword");
+  if (x.type == "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+ $('input').blur(function()
+    {
+		
+		var valplaceholder = $(this).attr("placeholder")
+		var vallblid = $(this).attr("id")
+		  var valid = "err" + vallblid;
+		  var valtext = "Please enter " + valplaceholder;
+		
+		
+          var check = $(this).val();
+          if(check == '')
+          {
+                $(this).parent().addClass('has-danger');
+			
+				$(this).after('<label id="' + valid + '" class="error mt-2 text-danger">'+valtext+'</label>');
+
+				
+          }
+          else
+          {
+                $(this).parent().removeClass('has-danger');  
+				$("#"+valid+"").fadeOut(); 
+          }
+    });
+ function adminWindow(){
+	  if($("#txtUsername").val()==""){
+		$("#txtUsername").focus();
+	  }
+	  else if($("#txtPassword").val()==""){
+		$("#txtPassword").focus();
+	  }
+	   
+	  else{ 
+	  
+		$('#btnSignIn').attr("disabled","true");
+		$('#btnSignIn').removeClass('btn-success');
+		$('#btnSignIn').addClass('btn-secondary');//secondary;
+		$('#btnSignIn').html('<i class="ti-timer"></i> Processing...');
+		
+		  $.ajax({
+			  type:"POST",
+			  url:"apiCheckAdminLogin.php",
+			  data:{username:$("#txtUsername").val(),
+				  password:$("#txtPassword").val()},
+			  success:function(response){
+				console.log(response);
+				$('#btnSignIn').removeAttr('disabled');
+				$('#btnSignIn').removeClass('btn-warning');
+				$('#btnSignIn').addClass('btn-success');
+				$('#btnSignIn').html('Sign In');
+				if($.trim(response)=="Success"){
+				  $("#txtUsername").val("");
+				  $("#txtPassword").val("");
+				  showAlertRedirect("Success","login Successfully","success","pgAdminDashboard.php");
+				}
+			  else if($.trim(response)=="Blocked"){
+				  showAlert("warning","Your Account Has Been Blocked!","warning");
+				   $("#txtUsername").val("");
+				   $("#txtPassword").val("");
+				   $("#txtUsername").focus();
+				  
+			  } 
+			  else if($.trim(response)=="Invalid"){
+					showAlert("error","Invalid Username/Password","error");
+					$("#txtPassword").val("");
+					$("#txtPassword").focus();
+				}	
+			   else{
+				  showAlert("error","Something Went Wrong. Please Try After Sometime","error");
+				}
+			  }
+		  }); 
+	  }
+  } 
+ 
+ </script>
+</html>

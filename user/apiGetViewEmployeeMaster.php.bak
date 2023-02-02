@@ -1,0 +1,70 @@
+<?php
+	session_start();
+	// Include class definition
+	require "function.php";
+	$sign=new Signup();
+	$qry="SELECT er.id,er.employee_photo,er.employee_name,td.department_name,tdgn.designation_value,tr.role_name,trs.verification_status
+	FROM ((tw_employee_registration er INNER JOIN tw_employee_login el ON er.id = el.employee_id) 
+	INNER JOIN tw_department_master td ON er.employee_department = td.id 
+	INNER JOIN tw_designation_master tdgn ON er.employee_designation = tdgn.id 
+	INNER JOIN tw_role_master tr ON er.employee_role = tr.id 
+	INNER JOIN tw_verification_status_master trs ON er.status = trs.id) WHERE er.company_id='".$_SESSION["company_id"]."'";
+	
+	$retVal = $sign->FunctionJSON($qry);
+
+	$qry1="Select count(*) as cnt from tw_employee_registration where company_id = '".$_SESSION["company_id"]."'";
+	$retVal1 = $sign->Select($qry1);
+
+	$decodedJSON2 = json_decode($retVal);
+	$count = 0;
+	$i = 1;
+	$x=$retVal1;
+	$table="";
+	$it=1;
+	$table.="<thead><tr><th>SR.NO</th><th>Employee Photo</th><th>Employee Name</th><th>Department Name</th><th>Designation</th><th>Role Name</th><th>Verification Status</th><th>Edit</th><th>Delete</th></tr></thead><tbody>";
+	
+	while($x>=$i){
+	echo$x;
+	echo"-".$i;
+	$id = $decodedJSON2->response[$count]->id;
+	$count=$count+1;
+	$employee_photo = $decodedJSON2->response[$count]->employee_photo;
+	$count=$count+1;
+	$employee_name = $decodedJSON2->response[$count]->employee_name;
+	$count=$count+1;
+	$department_name  = $decodedJSON2->response[$count]->department_name ;
+	$count=$count+1;
+	$designation_value  = $decodedJSON2->response[$count]->designation_value ;
+	$count=$count+1;
+	$role_name  = $decodedJSON2->response[$count]->role_name ;
+	$count=$count+1;
+	$verification_status  = $decodedJSON2->response[$count]->verification_status ;
+	$count=$count+1;
+	
+	if($employee_photo==""){
+		$employee_photo="ic_company_logo.jpg";
+	}
+	else{
+		$employee_photo=$employee_photo;
+	}
+	
+		$table.="<tr>";
+		$table.="<td>".$it."</td>"; 
+		$table.="<td><img src='../assets/images/Documents/Employee/Temp/".$employee_photo."' class='img-lg rounded-circle mb-3' /></td>";
+		$table.="<td>".$employee_name."</td>";
+		$table.="<td>".$department_name."</td>";
+		$table.="<td>".$designation_value."</td>";
+		$table.="<td>".$role_name."</td>";
+		$table.="<td>".$verification_status."</td>";
+		$table.="<td><a href='javascript:void(0)' onclick='editRecord(".$id.")'>Edit</a></td>";
+		$table.="<td><a href='javascript:void(0)' onclick='deleteRecord(".$id.")'>Delete</a></td>";
+		$it++;
+		$table.="</tr>";
+		
+
+	$i=$i+1;
+}
+	$table.="</tbody>";
+	echo $table;
+?>
+	

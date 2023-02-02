@@ -1,0 +1,34 @@
+<?php
+//$otp= $_POST["Otp"];
+$otpfinal= 123456;
+$email=$_POST["value"];
+echo $id=$_POST["id"];
+//$User_type=$_POST["User_type"];
+echo $contact=$_POST["idval"];
+
+date_default_timezone_set("Asia/Kolkata");
+$date=date("Y-m-d h:i:sa");
+include("function.php");
+include("mailFunction.php");
+include("commonFunctions.php");	
+
+$commonfunction=new Common();
+$ip_address= $commonfunction->getIPAddress();
+    $qry="insert into tw_otp_verify(user_id,contact_number,user_type,status,otp,action,generated_by,generated_on,generated_ip) 
+	values('".$id."','".$contact."','Employee','Pending','".$otpfinal."','otp verification','".$id."','".$date."','".$ip_address."') ";
+	$sign=new Signup();
+	$retVal1 = $sign->FunctionQuery($qry);	
+	 
+	if($retVal1="Success"){
+		echo "Success";
+	}
+	else{
+		echo "error";
+	}	
+
+
+
+
+
+
+?>

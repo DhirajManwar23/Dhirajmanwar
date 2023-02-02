@@ -1,0 +1,9 @@
+aggregator_name,grn_number,type_of_submission,purchase_invoice_number,purchase_invoice_date,dispatched_state,dispatched_place,invoice_quantity,plant_quantity,aggregator_wbs_number,aggregator_wbs_date,plant_wbs_number,plant_wbs_date,vehicle_number,eway_bill_number,lr_number,lr_date
+Karuna,87,Monthly,275,09-04-2022,Maharashtra,Palghar,"9,810.00","9,705.00",10559,09-04-2022,5558 /5569,11-04-2022,MH03CV6268,2814 1626 3007,,
+Karuna,140,Monthly,277,16-04-2022,Maharashtra,Palghar,"8,530.00","8,495.00",10767,16-04-2022,5737 /5732,17-04-2022,GJ15Z1658,2414 1902 9318,,
+Karuna,162,Monthly,278,19-04-2022,Maharashtra,Palghar,"9,500.00","9,430.00",10864,19-04-2022,5803/5808,20-04-2022,MH48AG2318,2614 2011 4894,,
+Karuna,198,Monthly,279,22-04-2022,Maharashtra,Palghar,"9,850.00","9,740.00",10948,22-04-2022,5914 / 5917,23-04-2022,MH03DV2903,2414 2147 3800,,
+Karuna,234,Monthly,280,26-04-2022,Maharashtra,Palghar,"9,940.00","9,880.00",11078,26-04-2022,6027 / 6030,28-04-2022,MH03CV6911,2814 2300 7344,,
+Karuna,85,Monthly,289,08-04-2022,Maharashtra,Pune,"12,195.00","12,060.00",4431,08-04-2022,5560 /5562,11-04-2022,DN09M9989,2414 1584 3019,,
+Karuna,144,Monthly,290,16-04-2022,Maharashtra,Pune,"11,640.00","11,610.00",184,16-04-2022,5749 /5747,18-04-2022,DN09M9989,2114 1899 4469,,
+Karuna,256,Monthly,293,28-04-2022,Maharashtra,Pune,"9,110.00","9,080.00",34,28-04-2022,6098 / 6100,30-04-2022,DD03K9565,2114 2378 6314,,

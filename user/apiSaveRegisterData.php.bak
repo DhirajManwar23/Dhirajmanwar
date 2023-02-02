@@ -1,0 +1,103 @@
+<?php	
+
+	$companyname = $_POST["companyname"];
+	$unenc_email = $_POST["email"];
+	$email = md5($unenc_email);
+	$password = md5($_POST["password"]);
+	$companytype = $_POST["companytype"];
+	
+	//whether ip is from share internet
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	}
+	//whether ip is from proxy
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))  {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
+	//whether ip is from remote address
+	else{
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	}
+	date_default_timezone_set("Asia/Kolkata");
+	$date=date("Y-m-d h:i:sa");
+	
+
+	
+	// Include class definition
+	include("function.php");
+	include("mailFunction.php");
+	//---------------------------------------------------------
+	$qry="Select count(*) as cnt from tw_company_login where Username='".$email."'";
+	$sign=new Signup();
+	$retVal = $sign->Select($qry);
+	if($retVal>0){
+		echo "Exist";
+	}
+	else
+	{	
+		
+		 $qry1="insert into tw_company_details (CompanyName,CompanyType,Status,created_on,created_ip) values('".$companyname."','".$companytype."','Pending','".$date."','".$ip_address."')";
+		
+			$retVal1 = $sign->FunctionQuery($qry1,true);
+			
+			
+			
+		   if($retVal1!=""){
+				$created_by=$retVal1;
+				$qry2="insert into tw_company_login (Username,Password,Type,Status) values('".$email."','".$password."','Company','On')";
+		
+				$retVal2 = $sign->FunctionQuery($qry2);
+				 if($retVal2=="Success"){
+					    $qry4="insert into tw_company_contact (company_id ,contact_field ,value ,status,created_by,created_on,created_ip) values('".$created_by."','1','".$_POST["email"]."','Pending','".$created_by."','".$date."','".$ip_address."')";
+		
+						$retVal4 = $sign->FunctionQuery($qry4);
+						if($retVal4=="Success"){
+							
+							
+							$mailobj=new twMail();
+							
+							//
+							$mailobj=new twMail();
+							$subject = "Registration Mail";
+							$myfile = fopen("../assets/Mailer/new-registration.html", "r");
+	
+			                $message = fread($myfile,filesize("../assets/Mailer/new-registration.html"));
+			    
+			                $message = str_replace("_USERNAMEPLACEHOLDER_",$companyname,$message);
+				            fclose($myfile);
+							//
+							$mail_response = $mailobj->Mailsend($unenc_email,$subject,$message);
+							
+							 //--Mail function end (User) 
+							//---
+							$file_path = '../assets/images/Documents/Verification/'.$_POST["email"];
+							$file_path1 = '../assets/images/Documents/Verified/'.$_POST["email"];
+						
+							if (!file_exists($file_path))/* Check folder exists or not */
+							{
+								@mkdir($file_path, 0777);/* Create folder by using mkdir function */
+							}
+							if (!file_exists($file_path1))/* Check folder exists or not */
+							{
+								@mkdir($file_path1, 0777);/* Create folder by using mkdir function */
+							}
+							//---
+							
+							echo "Success";
+						}
+						else{
+							echo "Error";
+						}
+				}
+				else{
+					echo "Error";
+				}
+				
+			}
+			else{
+				echo "Error";
+			} 
+	}
+	
+	
+?>

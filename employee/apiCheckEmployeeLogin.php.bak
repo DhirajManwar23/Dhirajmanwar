@@ -1,0 +1,46 @@
+<?php
+   
+    session_start();
+    require "function.php";
+	include("commonFunctions.php");	
+	$sign=new Signup();
+    $unenc_email=$sign->escapeString($_POST["username"]);
+    $username=md5($unenc_email);
+	$u=$sign->escapeString($_POST["username"]);
+	$password=md5($sign->escapeString($_POST["password"]));
+    $qry="select count(*) as cnt from tw_employee_login where username='".$username."' and password='".$password."'" ;
+    $retVal = $sign->Select($qry);
+	if($retVal==1){
+	   $qry1="select status from tw_employee_login where username='".$username."' and password='".$password."' " ;
+	  	$retVal1 = $sign->SelectF($qry1,"status");
+		if($retVal1=="On")
+		{
+			$qry2="select id from tw_employee_login where username='".$username."'";
+			$retVal2 = $sign->SelectF($qry2,"id");
+			$_SESSION["employeeusername"]=$unenc_email;
+			$_SESSION["employee_id"]=$retVal2;
+			$qry6="SELECT forced_password_change FROM tw_employee_login WHERE username='".$username."'";
+	        $retVal6=$sign->SelectF($qry6,"forced_password_change");
+			
+			if($retVal6=="false"){
+				echo "ForcePassword";
+			}
+			else{
+				echo "Success";	
+			}
+		
+		}
+		else{
+			echo "Blocked";
+		}	
+		
+	}
+    else{
+		
+		echo "Invalid";
+	}
+  
+ 
+
+
+?>

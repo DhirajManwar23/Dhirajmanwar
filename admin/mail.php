@@ -1,0 +1,20 @@
+<?php
+
+$receiver = "karunagws@gmail.com";
+$subject = "Test email to send from XAMPP";
+$body = "Hi, This is test mail to check how to send mail from Localhost Using Gmail ";
+$sender = "From:tracewastemail@gmail.com";
+echo $receiver."-".$sender ;
+if (mail($receiver, $subject, $body, $sender))
+
+{
+    echo "Email successfully sent to $receiver...";
+}
+
+else
+
+{
+    echo "Email sending failed!";
+} 
+
+?>

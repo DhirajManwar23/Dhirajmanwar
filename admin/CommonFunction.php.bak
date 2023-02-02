@@ -1,0 +1,9 @@
+<?php
+class CommonFunction{
+	 public function demoFuntion($value){
+			return $value;
+    }
+}
+
+
+?>

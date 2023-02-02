@@ -1,0 +1,30 @@
+<?php
+	session_start();
+	$username=md5($_POST["username"]);
+	$password=md5($_POST["password"]);
+	
+	
+	// Include class definition
+	require "function.php";
+	echo $qry="select count(*) as cnt from tw_admin_login where Username='".$username."' and Password='".$password."'" ;
+	$sign=new Signup();
+    echo	$retVal = $sign->Select($qry);
+	
+    if($retVal==1){
+		$qry1="select Status from tw_admin_login where Username='".$username."' and Password='".$password."' " ;
+		$retVal1 = $sign->SelectF($qry1,"Status");
+		if($retVal1=="On")
+		{
+			$_SESSION["username"]=$username;
+			echo "Success";
+		}
+		else{
+			echo "Blocked";
+		} 
+	}
+	else{
+		echo "Invalid";
+	
+	}  
+	
+?>

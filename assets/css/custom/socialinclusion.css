@@ -1,0 +1,135 @@
+.rag-profile-pic{
+    display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	width: 100px;
+    height: 100px;
+	border-radius: 14px;
+}
+
+.rag-checksize{
+    width: 30px;
+    height: 30px;
+}
+
+.rag-crossize{
+    height: 39px;
+    width: 39px;
+}
+.rag-crossize1{
+   height: 29px;
+    width: 31px;
+}
+.rag-row{
+	display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+	padding-bottom: 20px;
+  
+}
+.rag-details-row{
+	padding-top: 40px;
+	display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.rag-doc-view-row{
+	display: flex;
+    flex-wrap: wrap;
+    margin-right: 94px;
+    margin-left: -15px;
+	margin-top: 13px;
+	border-radius: 32px;
+    background: linear-gradient(90deg, rgba(125, 214, 199, 0.35) -9.58%, rgba(217, 217, 217, 0) 87.98%);
+}
+.rag-doc-view-row-reject{
+	display: flex;
+    flex-wrap: wrap;
+    margin-right: 94px;
+    margin-left: -15px;
+	margin-top: 13px;
+	border-radius: 32px;
+    background:linear-gradient(90deg, rgba(252, 92, 101, 0.35) -9.58%, rgba(217, 217, 217, 0) 87.98%);
+}
+.rag-name{
+	text-align: center;
+    color: green;
+    font-weight: bold;
+}
+.rag-line{
+	position: absolute;
+	width: 338px;
+	height: 0px;
+	left: 144px;
+	top: 912px;
+	border: 1px solid #40A232;
+}.container{
+    padding: 30px;
+}
+
+
+
+.profile-pic{
+    align:center;
+    padding-left:4em;
+
+}
+
+.greenline{
+    width: 356px;
+    height: 1px;
+    left: 171px;
+    top: 373px;
+    border: 1px solid #40A232;
+}
+
+.checksize{
+    width: 30px;
+    height: 30px;
+}
+
+.crossize{
+    height: 43px;
+    width: 43px;
+}
+
+.line-gap{
+    margin: 14px;
+
+}
+
+.divlien{
+    width: 679px;
+    height: 1px;
+    border: 1px solid #D7D7D7;
+}
+
+.protext{
+    font-family: 'Calibri';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    color: #333333;
+}
+
+.text{
+    font-family: 'Calibri';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.protext{
+    font-family: 'Calibri';
+    font-style: bold;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #56AC2F;
+}

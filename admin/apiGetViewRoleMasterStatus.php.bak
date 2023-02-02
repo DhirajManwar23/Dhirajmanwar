@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	$qry="select id,role_name,priority,visibility from tw_role_master order by id Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = "tw_role_master";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

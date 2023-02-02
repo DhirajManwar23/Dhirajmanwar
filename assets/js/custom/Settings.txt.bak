@@ -1,0 +1,17 @@
+Primary Email = 1
+Other Email = 2
+Primary Contact = 3
+Mobile = 4
+Home = 5
+Work = 6
+Fax = 7
+Other Contact = 8
+Website = 9
+KYC = 1
+Submission = 2
+Proof = 3
+Internal Docs = 4
+Registration Status = Pending
+Verification Status = Verified
+Document Status = Pending
+Awaiting Status = Awaiting

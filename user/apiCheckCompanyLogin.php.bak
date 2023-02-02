@@ -1,0 +1,42 @@
+<?php
+	session_start();
+	$unenc_email=$_POST["username"];
+	$username=md5($unenc_email);
+	$password=md5($_POST["password"]);
+	$rememberme=$_POST["rememberme"];
+	// Include class definition
+	require "function.php";
+	$qry="select count(*) as cnt from tw_company_login where Username='".$username."' and Password='".$password."'" ;
+	$sign=new Signup();
+	$retVal = $sign->Select($qry);
+	if($retVal==1){
+		$qry1="select Status from tw_company_login where Username='".$username."' and Password='".$password."' " ;
+		$retVal1 = $sign->SelectF($qry1,"Status");
+		if($retVal1=="On")
+		{
+			$qry2="select company_id from tw_company_contact where value='".$unenc_email."'";
+			$retVal2 = $sign->SelectF($qry2,"company_id");
+			if($rememberme==1){
+				$_SESSION["companyusername"]=$unenc_email;
+				$_SESSION["company_id"]=$retVal2;
+				$cookie_name = "twuser";
+				$cookie_value = $username;
+				setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+				echo "Success";
+			}
+			else{
+				$_SESSION["companyusername"]=$unenc_email;
+				$_SESSION["company_id"]=$retVal2;
+				echo "Success";
+			}
+		}
+		else{
+			echo "Blocked";
+		}
+		
+	}
+	else{
+		echo "Error";
+	}
+	
+?>

@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	echo $qry="select id,module_name,module_type,description,priority,visibility from tw_module_master order by id Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = " tw_module_master";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

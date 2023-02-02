@@ -1,0 +1,59 @@
+.Collection2{
+	padding-top: 60px;
+    padding-left: 21px;
+}
+.Yearly{
+    color: #40A232;
+    font-weight: bold;
+	font-size: 16px;
+}
+.partner-card{
+	
+    BORDER-RADIUS: 17PX;
+	border-style: solid;
+    border-color: #bbbbbb;
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+border-radius: 20px;
+}
+.partner-img{
+	width: auto;
+    height: 100px;
+}
+.partner-main-panel{
+	background-color: white;
+}
+.Gender{
+    width: 15px;
+    height: auto;
+}
+.partner-text{
+	font-size: 15px;
+	color: #010101;
+    margin-bottom: 1.2rem;
+    text-transform: capitalize; 
+    font-weight: 600;
+}
+.partner-collection-card{
+	height: auto;
+	width: auto;
+
+}
+.partner-social-inclusion-card{
+	height: auto;
+	width: auto;
+    background-color: aliceblue;
+    border-radius: 15px;
+}
+.partner-center-img{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.partner-beach-img{
+width: 149px;
+}
+.partner-speaker-img{
+	padding-top: 16px;
+    padding-left: 21px;
+}

@@ -1,0 +1,330 @@
+
+.container-fluid{
+	padding: 60px;
+ 	color:#313131
+	}  
+
+/* header */
+
+.title{
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 30px;
+	
+	color: #56AC2F;
+	}
+
+.states{
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 0em;
+
+	color: #313131;
+	position: relative;
+	top: 10px;
+	}
+
+.line{
+	border-top: 2px solid #40A232;
+	
+	position: relative;
+    top: 30px;
+	}	
+	
+.category{
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	
+	color: #40A232;
+	position: relative;	
+	top: 36px;
+	}
+		
+.topimg{
+	bottom:24px;
+}	
+
+
+/* download and upload*/
+.download_upload{
+	float: right;
+
+	position: relative;
+	bottom: 139px;
+    left: 111px;
+	}
+
+
+
+.download_text{
+	
+	font-family: 'Calibri';
+	font-style: bold;
+	font-weight: 700;
+	font-size: 16px;
+
+	
+	position:relative;
+	top:10px;
+
+	}	
+
+.upload_text{
+	text-align: center;
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 30px;
+	
+	position:relative;
+	top:10px;
+}
+
+
+.downloadpng{
+	position:relative;
+	right: 60px
+}
+
+.uploadpng{
+	position:relative;
+	right: 45px;
+}
+
+.download{
+	box-sizing: border-box;
+	
+	width: auto;
+
+	background: #D8F6FF;
+	border: 2px solid #2A94F4;
+	border-radius: 10px;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+
+	color: #000000;
+	text-align: center;
+	
+	}	
+
+.upload{
+	box-sizing: border-box;
+	
+	width: auto;
+
+	background: #FFF4D8;
+	border: 2px solid #FFBE55;
+	border-radius: 10px;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+
+	color: #000000;
+	text-align: center;
+	}
+
+.picload{
+	position:relative;
+	top: 3px;
+		
+}
+
+.circle{
+	background-color:white;
+	border-radius:50%;
+	height:32px;
+	width:32px;
+	
+	position:relative;
+	
+	top: 10px;
+	right:14px;
+	text-align: center;		
+}
+
+.downloadpng{
+	position:relative;
+	right:30px;
+}
+
+	
+
+/* nav */
+
+.bgmenu{
+	height: 140px;
+	width: 1031px;	
+	background: #C5F4B0;
+	border-radius: 20px;
+	margin: auto;
+	top: 200px;
+	}
+
+
+
+.pending{
+	box-sizing: border-box;
+
+	width: 103px;
+	height: auto;
+
+	margin:10px;
+
+	background: #40A232;
+	border: 1px solid #40A232;
+	border-radius: 15px;
+
+	font-family: 'Calibri';
+	font-style: bold;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+	
+	text-align: center;
+	line-height: 40px;
+
+	box-shadow: 0px 10px 29px rgba(0, 0, 0, 0.25);
+	
+	color: #FFFFFF;
+	}
+	
+
+.nav_box{
+	box-sizing: border-box;
+
+	width: auto;
+	height: 127px;
+
+	margin:10px;
+
+	background: #ffffff;
+	border: 1px solid #40A232;
+	border-radius: 15px;
+
+	font-family: 'Calibri';
+	font-style: bold;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+	
+	text-align: center;
+	line-height: 40px;
+	padding: 13px;
+
+	
+	
+	color: #000000;
+	}
+
+
+	/*filter button*/
+	
+.filter{
+	width: 100px;
+	height: 42px;
+	
+	background: #40A232;
+	border: 1px solid #40A232;
+	border-radius: 7px;
+	float: right;
+	text-align: center;
+	margin-bottom: 10px;
+
+	filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+
+}	
+
+.box{
+	background-color: white;
+	border-radius: 6px;
+	
+	height: 28px;
+	width: 28px;
+	text-align: center;
+	position: relative;
+	top: 6px;
+	left: 5px;
+}
+
+.filter_text{
+	font-family: 'Calibri';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 24px;
+
+	color: #FFFFFF;
+	position: relative;
+	bottom: 20px;
+	left: 15px;
+}
+
+
+	/* list */
+
+
+
+.list1{
+	color: #b72525;
+	height: 55px;
+	background-color: #F4F4F4;
+	border-radius: 10px;
+
+}
+
+.titlelist{
+	height: 55px;
+	background-color: #C5F4B0;
+	border-radius: 10px;
+
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	font-style: bold;
+
+	text-align: left;
+	padding-top: 15px;
+	margin-bottom: 10px;
+
+}
+
+.list_text{
+	margin: 20px;
+}
+
+.tw-float-right{
+	float: right;
+}
+
+.company-dashboard-inclusion-card {
+    height: auto;
+    width: auto;
+    background-color: #C5F4B0;
+    border-radius: 15px;
+}
+.company-dashboard-card{
+	background-color: #C5F4B0;
+}
+.recycle-card{
+	width: 174px;
+    height: auto;
+}
+.download-upload-card{
+	width: 200px;
+    height: auto;
+}

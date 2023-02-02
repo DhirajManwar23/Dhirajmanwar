@@ -1,0 +1,46 @@
+<?php
+	session_start();
+	// Include class definition
+	include("function.php");
+	$sign=new Signup();
+	$AddressLine1=$sign->escapeString($_POST["AddressLine1"]);
+	$AddressLine2=$sign->escapeString($_POST["AddressLine2"]);
+	$Pincode=$sign->escapeString($_POST["Pincode"]);
+	$Location=$sign->escapeString($_POST["Location"]);
+	$City=$sign->escapeString($_POST["City"]);
+	$State=$sign->escapeString($_POST["State"]);
+	$Country=$sign->escapeString($_POST["Country"]);
+	
+	//whether ip is from share internet
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	}
+	//whether ip is from proxy
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))  {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
+	//whether ip is from remote address
+	else{
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	}
+	date_default_timezone_set("Asia/Kolkata");
+	$date=date("Y-m-d h:i:sa");
+	$created_by=$_SESSION["companyusername"];
+	$company_id=$_SESSION["company_id"];
+			
+		$qry1="Update tw_company_details set AddressLine1='".$AddressLine1."',AddressLine2='".$AddressLine2."',Location='".$Location."',Pincode='".$Pincode."',City='".$City."',State='".$State."',Country='".$Country."',modified_by='".$created_by."',modified_on='".$date."',modified_ip='".$ip_address."' where ID='".$company_id."' "; 
+		$retVal1 = $sign->FunctionQuery($qry1);
+		if($retVal1=="Success"){
+			echo "Success";
+		}
+		else{
+			echo "error";
+		}
+				
+				
+	
+	
+	
+	
+	
+?>

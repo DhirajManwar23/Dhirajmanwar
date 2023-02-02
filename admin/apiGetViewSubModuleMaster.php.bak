@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	echo $qry="select id,submodule_name,submodule_type,description,priority,visibility from tw_submodule_master order by id Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = "tw_submodule_master";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

@@ -1,0 +1,26 @@
+(function($) {
+
+/* showAlertBlank = function(vType,vTitle,vText,vURL){
+	Swal.fire({
+		icon: vType,
+		title: vTitle,
+		text: vText,
+		showCancelButton: false
+	},
+	function(){
+		window.location.href = vURL;
+	});
+};	 */
+showAlertBlank = function(valid,valtext,valtextfieldid,type){
+	/* valtextfieldid.parent().addClass('has-danger');
+	valtextfieldid.after('<label id="' + valid + '" class="error mt-2 text-danger">'+valtext+'</label>'); */
+	
+	if(type=="blank"){
+		alert("k");
+	}
+	else{
+		alert("else");
+	}
+};	
+	
+})(jQuery);

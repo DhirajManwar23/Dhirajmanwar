@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	echo $qry="select id,name,email,role,priority,visibility from tw_sub_admin order by id Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = "tw_sub_admin";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

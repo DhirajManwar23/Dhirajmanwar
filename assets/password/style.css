@@ -1,0 +1,42 @@
+.wrapper {
+  width: 300px;
+  margin: 50px auto;
+}
+.input {
+  overflow: hidden;
+}
+.input div {
+  position: relative;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.input input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  padding: 3px;
+  border: 0;
+  border-radius: 3px;
+  outline: none;
+}
+.input span {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: all 1s ease-in-out;
+}
+.input span.weak {
+  background-color: #A80000;
+}
+.input span.medium {
+  background-color: #DF6B00;
+}
+.input span.strong {
+  background-color: #2C6B00;
+}

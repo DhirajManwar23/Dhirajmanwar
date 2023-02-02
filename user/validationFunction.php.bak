@@ -1,0 +1,41 @@
+<?php
+class Validation{
+	
+    public function checkValidationEmail($value){
+  
+		if (empty($value)) {
+			$emailErr = "Please enter Email";
+			return $emailErr;
+		}else {
+			//$email = test_input($value);
+			// check if e-mail address is well-formed
+			if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+			  $emailErr = "Invalid email format";
+			  return $emailErr;
+			}
+		}
+    }
+	public function checkValidationName($value){
+  
+		if (empty($value)) {
+			$usernameErr = "Please Enter Username";
+			return $usernameErr;
+		}
+    }
+	public function checkValidationMobile($value){
+  
+		 var phoneno = /^\d{10}$/;
+		  if($value.value.match(phoneno))
+		  {
+			  return true;
+		  }
+		  else
+		  {
+			 alert("Not a valid Phone Number");
+			 return false;
+		  }
+    }
+	
+}
+
+?>

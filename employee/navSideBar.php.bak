@@ -1,0 +1,93 @@
+<?php
+
+$username=md5($_SESSION["employeeusername"]);
+$qry6="SELECT forced_password_change FROM tw_employee_login WHERE username='".$username."'";
+$retVal6=$sign->SelectF($qry6,"forced_password_change");
+?>
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	<ul class="nav">
+	  <li class="nav-item">
+	   <?php if($retVal6=="false"){?>
+		<a class="nav-link" href="pgEmployeeDashboard.php">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">Dashboard</span>
+		</a>
+		<?php }
+		else{ ?>
+		<div class="nav-link-disable">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">Dashboard</span>
+		</div>
+		<?php } ?>
+	  </li>
+	  <li class="nav-item">
+	   <?php if($retVal6=="false"){?>
+		<a class="nav-link" href="pgProductManagement.php">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">Poduct Management</span>
+		</a>
+		<?php }
+		else{ ?>
+		<div class="nav-link-disable">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">Poduct Management</span>
+		</div>
+		<?php } ?>
+	  </li>
+	  
+	  <li class="nav-item">
+	  <?php if($retVal6=="false"){?>
+		<a class="nav-link" href="pgPOManagementForm.php">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">PO Management</span>
+		</a>
+		<?php }
+		else{ ?>
+		<div class="nav-link-disable">
+		  <i class="icon-grid menu-icon"></i>
+		  <span class="menu-title">PO Management</span>
+		</div>
+		<?php
+		}
+		 ?>
+	  </li>
+	  <li class="nav-item">
+	     <?php if($retVal6=="false"){?>
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Stock Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+			<?php }
+		else{ ?>
+		     <div class="nav-link-disable" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Stock Management</span>
+              <i class="menu-arrow"></i>
+            </div>
+		<?php } ?>
+		 <?php if($retVal6=="false"){?>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pgViewCompanyList.php">Material Inward</a></li>
+              </ul> 
+			  <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pgViewCompanyList.php">Material Outward</a></li>
+              </ul>
+            </div>
+          </li>
+	</ul>
+	<?php }
+		else{ ?>
+		<div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="">Material Inward</a></li>
+              </ul> 
+			  <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="">Material Outward</a></li>
+              </ul>
+            </div>
+          </li>
+	</ul>
+		<?php } ?>
+	</nav>

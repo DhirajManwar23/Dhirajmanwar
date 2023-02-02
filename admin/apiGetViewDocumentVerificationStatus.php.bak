@@ -1,0 +1,11 @@
+<?php
+	// Include class definition
+	require "function.php";
+	
+	$qry="select ID,CompanyName,Location,Pincode,City,Status from tw_company_details order by ID Desc";
+	$sign=new Signup();
+	$format = "HTML";
+	$tableName = "tw_company_details";
+	$retVal = $sign->FunctionDataTable($qry,$format,$tableName,true,true);
+	echo $retVal;
+?>

@@ -1,0 +1,234 @@
+<?php 
+session_start();
+	if(!isset($_SESSION["employeeusername"])){
+		header("Location:pgEmployeeLogin.php");
+	}
+	
+	 $requesttype = $_REQUEST["type"];
+	 $requestid = $_REQUEST["id"];
+	 $requestcontactfield = $_REQUEST["contactfield"];
+	
+	//whether ip is from share internet
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	}
+	//whether ip is from proxy
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))  {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
+	//whether ip is from remote address
+	else{
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	}
+	date_default_timezone_set("Asia/Kolkata");
+	$cur_date=date("Y-m-d h:i:sa");
+	$created_by=$_SESSION["employee_id"];
+	
+	
+	// Include class definition
+	require "function.php";
+	$sign=new Signup();
+	$Status = "";
+	$value = "";
+	$contact_field = "";
+	
+	
+	if($requesttype=="add"){
+		
+		if($requestcontactfield=="3"){
+			$qry3 = "select id,contact_type from tw_contact_field_master where visibility = 'true' and id!='1' ORDER by priority, contact_type  ASC";
+			$retVal1 = $sign->FunctionOption($qry3,$contact_field,'contact_type','id');
+		}
+		else{
+			$qry1 = "select id,contact_type from tw_contact_field_master where visibility = 'true' and (id!='1' and id!='3') ORDER by priority, contact_type  ASC";
+			$retVal1 = $sign->FunctionOption($qry1,$Status,'contact_type','id');
+		}
+		
+		
+	}
+	else{
+			$qry2 = "SELECT contact_field,value FROM tw_employee_contact WHERE id = '".$requestid."'";
+			$retVal2 = $sign->FunctionJSON($qry2);
+			$decodedJSON = json_decode($retVal2);
+			$contact_field = $decodedJSON->response[0]->contact_field;
+			$value = $decodedJSON->response[1]->value;
+			
+			
+			if($requestcontactfield=="3"){
+				$qry3 = "select id,contact_type from tw_contact_field_master where visibility = 'true' and id='3' ORDER by priority, contact_type  ASC";
+				$retVal1 = $sign->FunctionOption($qry3,$contact_field,'contact_type','id');
+			}
+			else{
+				$qry3 = "select id,contact_type from tw_contact_field_master where visibility = 'true' and (id!='1' and id!='3') ORDER by priority, contact_type  ASC";
+				$retVal1 = $sign->FunctionOption($qry3,$contact_field,'contact_type','id');
+			}
+		
+		
+	}
+	
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Trace Waste | Contact Details</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
+  <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+		<?php
+			include_once("navTopHeader.php");
+		?>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+		<?php
+			include_once("navRightSideSetting.php");
+		?>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+		<?php
+			include_once("navSideBar.php");
+		?>
+      <!-- partial -->
+      <div class="main-panel">        
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Contact Details</h4>
+                  <div class="forms-sample">
+                    <div class="form-group row">
+                      <label for="ContactField" class="col-sm-3 col-form-label">Contact Field</label>
+                      <div class="col-sm-9">
+                        <select id="selContactField" class="form-control form-control-sm">
+							<?php echo $retVal1; ?>
+						</select>
+                      </div>
+                    </div>
+					<div class="form-group row">
+                      <label for="Value" class="col-sm-3 col-form-label">Value</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" maxlength="50" value="<?php echo $value; ?>" id="txtValue" placeholder="Value">
+                      </div>
+                    </div>
+					
+                    <button type="submit" class="btn btn-primary mr-2" onclick="adddata()"><?php if($requesttype=="add"){ ?>Add<?php }else{ ?>Update<?php } ?></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+			<?php
+				include_once("footer.php");
+			?>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../assets/js/hoverable-collapse.js"></script>
+  <script src="../assets/js/template.js"></script>
+  <script src="../assets/js/settings.js"></script>
+  <!-- endinject -->
+</body>
+<script src="../assets/css/jquery/jquery.min.js"></script>
+
+ <script>
+ $('input').blur(function()
+{
+		
+	var valplaceholder = $(this).attr("placeholder");
+	var vallblid = $(this).attr("id");
+	var valid = "err" + vallblid;
+	var valtext = "Please enter " + valplaceholder;
+    var check = $(this).val();
+	if(check == '')
+	{
+		$(this).parent().addClass('has-danger');
+		$(this).after('<label id="' + valid + '" class="error mt-2 text-danger">'+valtext+'</label>');	
+	}
+	else
+	{
+		$(this).parent().removeClass('has-danger');  
+		$("#"+valid+"").fadeOut(); 
+	}
+});
+  function adddata(){
+		var valcreated_by = "<?php echo $created_by;?>";
+	
+		var valcreated_on = "<?php echo $cur_date;?>";
+	
+		var valcreated_ip = "<?php echo $ip_address;?>";
+		
+		var valrequesttype = "<?php echo $requesttype;?>";
+		
+		
+		if(valrequesttype=="add"){
+			var valquery = "insert into tw_employee_contact(employee_id,contact_field,value,status,created_by,created_on,created_ip)values('"+valcreated_by+"','"+$("#selContactField").val()+"','"+$("#txtValue").val()+"','Pending','"+valcreated_by+"','"+valcreated_on+"','"+valcreated_ip+"')";
+			var valquerycount = "select count(*) as cnt from tw_employee_contact where value = '"+$("#txtValue").val()+"' and employee_id='"+valcreated_by+"'";
+			
+		}
+		else{
+			var valrequestid = "<?php echo $requestid;?>";
+			var valquery = "Update tw_employee_contact set contact_field = '"+$("#selContactField").val()+"' , value = '"+$("#txtValue").val()+"',modified_by='"+valcreated_by+"',modified_on='"+valcreated_on+"',modified_ip='"+valcreated_ip+"' where id = '"+valrequestid+"' ";
+			var valquerycount = "select count(*) as cnt from tw_employee_contact where value = '"+$("#txtValue").val()+"' and employee_id!='"+valcreated_by+"'";
+			 
+		}	
+		$.ajax({
+		type:"POST",
+		url:"apiEmployeeProfile.php",
+		data:{valquery:valquery,valquerycount:valquerycount},
+		success:function(response){
+			console.log(response);
+			if($.trim(response)=="Success"){
+				if(valrequesttype=="add"){
+					alertBox('Data Added Successfully');
+				}
+				else{
+					alertBox('Data Updated Successfully');
+				}
+				window.location.href="pgEmployeeProfile.php";
+			}
+			else if($.trim(response)=="Exist"){
+				alertBox('Value already exist');
+				$("#txtValue").focus();
+			}else{
+				alertBox('Something Went Wrong. Please Try After Sometime');
+			}
+		} 
+	});  
+  }
+ 
+function alertBox(value){
+	alert(value);
+}
+ </script>
+ 
+</html>
